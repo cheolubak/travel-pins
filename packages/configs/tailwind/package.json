@@ -1,0 +1,17 @@
+{
+  "name": "@travel-pins/tailwind",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./globals.css": "./globals.css",
+    "./postcss": "./postcss.config.mjs"
+  },
+  "files": [
+    "globals.css",
+    "postcss.config.mjs"
+  ],
+  "dependencies": {
+    "tailwindcss": "catalog:"
+  }
+}

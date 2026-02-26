@@ -1,0 +1,29 @@
+{
+  "name": "@travel-pins/storybook",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./main": "./main.ts",
+    "./preview": "./preview.ts",
+    "./tailwind.css": "./tailwind.css"
+  },
+  "files": [
+    "main.ts",
+    "preview.ts",
+    "tailwind.css"
+  ],
+  "dependencies": {
+    "@travel-pins/tailwind": "workspace:*"
+  },
+  "devDependencies": {
+    "@travel-pins/tsconfig": "workspace:*",
+    "storybook": "catalog:",
+    "@storybook/nextjs-vite": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "next": "catalog:",
+    "vite": "catalog:",
+    "typescript": "catalog:"
+  }
+}

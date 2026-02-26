@@ -1,0 +1,13 @@
+{
+  "name": "@travel-pins/components",
+  "version": "0.0.1",
+  "private": true,
+  "main": "src/index.ts",
+  "devDependencies": {
+    "@travel-pins/tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  }
+}
