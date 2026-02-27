@@ -11,9 +11,7 @@
   "dependencies": {
     "next": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:"
-  },
-  "dependencies": {
+    "react-dom": "catalog:",
     "@travel-pins/tailwind": "workspace:*"
   },
   "devDependencies": {

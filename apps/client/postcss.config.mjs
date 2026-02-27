@@ -1,1 +1,1 @@
-export { default } from "@travel-pins/tailwind/postcss";
+export { default } from '@travel-pins/tailwind/postcss';

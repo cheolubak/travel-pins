@@ -1,32 +1,32 @@
-import js from "@eslint/js";
-import nextPlugin from "@next/eslint-plugin-next";
-import tsPlugin from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
+import js from '@eslint/js';
+import nextPlugin from '@next/eslint-plugin-next';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
 
 export default [
   {
     ignores: [
-      "**/node_modules/**",
-      "**/dist/**",
-      "**/.next/**",
-      "**/out/**",
-      "**/build/**",
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/.next/**',
+      '**/out/**',
+      '**/build/**',
     ],
   },
   js.configs.recommended,
   {
-    files: ["**/*.ts", "**/*.tsx"],
+    files: ['**/*.ts', '**/*.tsx'],
     plugins: {
-      "@typescript-eslint": tsPlugin,
+      '@typescript-eslint': tsPlugin,
     },
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module",
+        ecmaVersion: 'latest',
+        sourceType: 'module',
       },
       globals: {
-        React: "writable",
+        React: 'writable',
       },
     },
     rules: {
@@ -34,18 +34,18 @@ export default [
     },
   },
   {
-    files: ["apps/client/**/*.ts", "apps/client/**/*.tsx"],
+    files: ['apps/client/**/*.ts', 'apps/client/**/*.tsx'],
     plugins: {
-      "@next/next": nextPlugin,
+      '@next/next': nextPlugin,
     },
     settings: {
       next: {
-        rootDir: "apps/client",
+        rootDir: 'apps/client',
       },
     },
     rules: {
       ...nextPlugin.configs.recommended.rules,
-      ...nextPlugin.configs["core-web-vitals"].rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
     },
   },
 ];
