@@ -10,18 +10,31 @@ import styles from './Map.module.css';
 interface MapProps {
   className?: string;
   clientId: string;
+  initCenter?: {
+    lat: number;
+    lng: number;
+  };
 }
 
-export const Map = ({ className, clientId }: MapProps) => {
+export const Map = ({
+  className,
+  clientId,
+  initCenter = {
+    lat: 37.3595704,
+    lng: 127.105399,
+  },
+}: MapProps) => {
   const mapElementRef = useRef<HTMLDivElement>(null);
 
   const mapRef = useRef<naver.maps.Map>(null);
 
   const [initMap, setInitMap] = useState(false);
 
+  const { lat, lng } = initCenter;
+
   useLayoutEffect(() => {
     const script = document.createElement('script');
-    script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${clientId}`;
+    script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${clientId}&submodules=geocoder`;
     script.type = 'text/javascript';
     script.async = true;
 
@@ -46,7 +59,7 @@ export const Map = ({ className, clientId }: MapProps) => {
     }
 
     const mapOptions: naver.maps.MapOptions = {
-      center: new naver.maps.LatLng(37.3595704, 127.105399),
+      center: new naver.maps.LatLng(lat, lng),
       zoom: 10,
     };
 
