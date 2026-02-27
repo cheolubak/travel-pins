@@ -1,28 +1,29 @@
 'use client';
 
+import type { Position } from '@travel-pins/domains';
+
 import { clsx } from 'clsx';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { Skeleton } from '../Skeleton';
 
-import styles from './Map.module.css';
+import styles from './CommonMap.module.css';
 
 interface MapProps {
   className?: string;
   clientId: string;
-  initCenter?: {
-    lat: number;
-    lng: number;
-  };
+  initCenter?: Position;
+  position?: Position;
 }
 
-export const Map = ({
+export const CommonMap = ({
   className,
   clientId,
   initCenter = {
     lat: 37.3595704,
     lng: 127.105399,
   },
+  position,
 }: MapProps) => {
   const mapElementRef = useRef<HTMLDivElement>(null);
 
@@ -31,6 +32,15 @@ export const Map = ({
   const [initMap, setInitMap] = useState(false);
 
   const { lat, lng } = initCenter;
+
+  useEffect(() => {
+    if (!position || !mapRef.current || typeof naver === 'undefined') {
+      return;
+    }
+
+    const { lat, lng } = position;
+    mapRef.current.setCenter(new naver.maps.LatLng(lat, lng));
+  }, [position]);
 
   useLayoutEffect(() => {
     const script = document.createElement('script');
@@ -60,7 +70,7 @@ export const Map = ({
 
     const mapOptions: naver.maps.MapOptions = {
       center: new naver.maps.LatLng(lat, lng),
-      zoom: 10,
+      zoom: 21,
     };
 
     mapRef.current = new naver.maps.Map(mapElementRef.current, mapOptions);

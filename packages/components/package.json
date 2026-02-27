@@ -5,6 +5,8 @@
   "main": "src/index.ts",
   "devDependencies": {
     "@travel-pins/tsconfig": "workspace:*",
+    "@travel-pins/tailwind": "workspace:*",
+    "@travel-pins/domains": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@types/navermaps": "catalog:",

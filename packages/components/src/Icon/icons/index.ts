@@ -64,3 +64,4 @@ export * from './IconStar';
 export * from './IconStopFill';
 export * from './IconStore';
 export * from './IconVisibility';
+export * from './IconMap';

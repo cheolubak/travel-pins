@@ -64,4 +64,5 @@ export type IconName =
   | 'star'
   | 'stop-fill'
   | 'store'
-  | 'visibility';
+  | 'visibility'
+  | 'map';

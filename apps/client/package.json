@@ -11,9 +11,11 @@
   "dependencies": {
     "@travel-pins/components": "workspace:*",
     "@travel-pins/tailwind": "workspace:*",
+    "@travel-pins/domains": "workspace:*",
     "next": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "zustand": "catalog:"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",
@@ -23,6 +25,7 @@
     "@types/react-dom": "catalog:",
     "babel-plugin-react-compiler": "catalog:",
     "tailwindcss": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "@types/navermaps": "catalog:"
   }
 }

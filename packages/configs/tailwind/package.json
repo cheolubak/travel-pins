@@ -5,10 +5,12 @@
   "type": "module",
   "exports": {
     "./globals.css": "./globals.css",
+    "./theme.css": "./theme.css",
     "./postcss": "./postcss.config.mjs"
   },
   "files": [
     "globals.css",
+    "theme.css",
     "postcss.config.mjs"
   ],
   "dependencies": {
