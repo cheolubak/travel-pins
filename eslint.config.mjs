@@ -57,6 +57,26 @@ export default [
     },
     rules: {
       ...tsPlugin.configs.recommended.rules,
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          fixStyle: 'separate-type-imports',
+          prefer: 'type-imports',
+        },
+      ],
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              importNames: ['default'],
+              message:
+                "React의 default import는 사용할 수 없습니다. Named import를 사용하세요 (예: import { useState } from 'react').",
+              name: 'react',
+            },
+          ],
+        },
+      ],
       'no-undef': 'off',
     },
   },
