@@ -1,0 +1,10 @@
+@reference '@travel-pins/tailwind/globals.css';
+
+.search {
+    @apply fixed;
+    @apply top-8;
+    @apply left-1/2;
+    @apply -translate-x-1/2;
+    @apply z-1000;
+    @apply w-11/12 md:w-[500px];
+}

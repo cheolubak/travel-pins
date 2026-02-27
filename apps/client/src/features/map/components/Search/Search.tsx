@@ -6,6 +6,8 @@ import { Icon, Input } from '@travel-pins/components';
 
 import { usePosition } from '@/src/features/map/stores/usePosition';
 
+import styles from './Search.module.css';
+
 export const Search = () => {
   const searchAddress = usePosition((state) => state.searchPosition);
 
@@ -21,9 +23,7 @@ export const Search = () => {
 
   return (
     <Input
-      className={
-        'fixed top-8 left-1/2 -translate-x-1/2 z-1000 min-w-[500px] max-w-11/12'
-      }
+      className={styles.search}
       onKeyDown={handleKeyboardEvent}
       placeholder="지역을 입력해주세요."
       prefix={<Icon name="map" />}

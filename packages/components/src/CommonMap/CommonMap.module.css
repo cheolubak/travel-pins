@@ -1,4 +1,8 @@
+@reference '@travel-pins/tailwind/globals.css'
+
 .map {
-    min-width: 400px;
-    min-height: 400px;
+    @apply min-w-[400px];
+    @apply min-h-[400px];
+    @apply max-w-screen;
+    @apply max-h-screen;
 }

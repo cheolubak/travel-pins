@@ -50,9 +50,12 @@ export const usePosition = create<PositionState>((set) => ({
         return;
       }
 
-      console.log('=======response.v2=======', result);
-
       const { x, y } = result;
+
+      localStorage.setItem(
+        POSITION_STORAGE_KEY,
+        JSON.stringify({ lat: Number(y), lng: Number(x) }),
+      );
 
       set({ position: { lat: Number(y), lng: Number(x) } });
     });
