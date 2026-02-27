@@ -4,10 +4,15 @@
   "private": true,
   "main": "src/index.ts",
   "devDependencies": {
-    "@travel-pins/tsconfig": "workspace:*"
+    "@travel-pins/tsconfig": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@types/navermaps": "catalog:",
+    "@types/node": "catalog:"
   },
   "dependencies": {
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "clsx": "catalog:"
   }
 }

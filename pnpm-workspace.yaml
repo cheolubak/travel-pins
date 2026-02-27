@@ -15,3 +15,7 @@ catalog:
   storybook: ^10
   '@storybook/nextjs-vite': ^10
   vite: ^7
+  '@types/navermaps': ^3
+  clsx: ^2
+  zustand: ^5
+  'babel-plugin-react-compiler': ^1
