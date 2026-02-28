@@ -1,0 +1,11 @@
+@reference '@travel-pins/tailwind/globals.css';
+
+.overlay {
+    @apply fixed;
+    @apply top-0;
+    @apply left-0;
+    @apply bottom-0;
+    @apply right-0;
+    @apply bg-black/50;
+    @apply z-1000;
+}

@@ -2,30 +2,71 @@
 
 import type { KeyboardEvent } from 'react';
 
-import { Icon, Input } from '@travel-pins/components';
+import {
+  Icon,
+  Input,
+  Modal,
+  Typography,
+  useModal,
+} from '@travel-pins/components';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 
-import { usePosition } from '@/src/features/map/stores/usePosition';
+import { useLoadedMap } from '@/src/features/map/stores/useLoadedMap';
+import { useMap } from '@/src/features/map/stores/useMap';
 
 import styles from './Search.module.css';
 
 export const Search = () => {
-  const searchAddress = usePosition((state) => state.searchPosition);
+  const { open } = useModal();
+
+  const searchAddress = useMap((state) => state.searchPosition);
+
+  const placeRef = useRef<kakao.maps.services.Places | null>(null);
+
+  useEffect(() => {
+    kakao.maps.load(() => {
+      placeRef.current = new kakao.maps.services.Places();
+    });
+  }, []);
 
   const handleKeyboardEvent = (e: KeyboardEvent<HTMLInputElement>) => {
     const { key } = e;
 
     const { value } = e.target as HTMLInputElement;
 
-    if (key.toLowerCase().includes('enter')) {
-      searchAddress(value);
+    if (!key.toLowerCase().includes('enter')) {
+      return;
     }
+
+    placeRef.current?.keywordSearch(value, (data, status, pagination) => {
+      if (status !== kakao.maps.services.Status.OK) {
+        return open(
+          <Modal>
+            <Typography>검색 결과가 없습니다</Typography>
+          </Modal>,
+        );
+      }
+
+      console.log('=======data=======', data, pagination);
+    });
+
+    searchAddress(value).catch((err) => {
+      if (typeof err === 'string') {
+        open(
+          <Modal>
+            <Typography>{err}</Typography>
+          </Modal>,
+        );
+      }
+    });
   };
 
   return (
     <Input
       className={styles.search}
       onKeyDown={handleKeyboardEvent}
-      placeholder="지역을 입력해주세요."
+      placeholder="원하는 장소를 입력해주세요."
       prefix={<Icon name="map" />}
       suffix={<Icon name="search" />}
     />

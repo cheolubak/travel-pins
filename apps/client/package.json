@@ -26,6 +26,7 @@
     "babel-plugin-react-compiler": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
-    "@types/navermaps": "catalog:"
+    "@types/navermaps": "catalog:",
+    "kakao.maps.d.ts": "catalog:"
   }
 }

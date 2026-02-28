@@ -14,29 +14,33 @@ import styles from './CommonMap.module.css';
 interface MapProps {
   cafeList?: Position[];
   className?: string;
-  clientId: string;
   initCenter?: Position;
+  kakaoAppKey: string;
+  naverClientId: string;
   onChangePosition?: (position: Position) => void;
+  onLoaded?: () => void;
   position?: Position;
 }
 
 export const CommonMap = ({
   cafeList,
   className,
-  clientId,
   initCenter = {
     lat: 37.3595704,
     lng: 127.105399,
   },
+  kakaoAppKey,
+  naverClientId,
   onChangePosition,
+  onLoaded,
   position,
 }: MapProps) => {
   const mapElementRef = useRef<HTMLDivElement>(null);
 
   const mapRef = useRef<naver.maps.Map>(null);
 
-  const [loadedMapScript, setLoadedMapScript] = useState(false);
-  const [initMap, setInitMap] = useState(false);
+  const [loadedNaverMapScript, setLoadedNaverMapScript] = useState(false);
+  const [initNaverMap, setInitNaverMap] = useState(false);
 
   const { lat, lng } = initCenter;
 
@@ -50,7 +54,12 @@ export const CommonMap = ({
   }, [position]);
 
   useEffect(() => {
-    if (!initMap || !mapRef.current || !cafeList || cafeList.length === 0) {
+    if (
+      !initNaverMap ||
+      !mapRef.current ||
+      !cafeList ||
+      cafeList.length === 0
+    ) {
       return;
     }
 
@@ -64,27 +73,26 @@ export const CommonMap = ({
         position: new naver.maps.LatLng(pos.lat, pos.lng),
       });
     });
-  }, [initMap, cafeList]);
+  }, [initNaverMap, cafeList]);
 
   useLayoutEffect(() => {
-    const script = document.createElement('script');
-    script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${clientId}&submodules=geocoder`;
-    script.type = 'text/javascript';
-    script.async = true;
-
-    script.onload = () => {
-      setLoadedMapScript(true);
+    const naverMapScript = document.createElement('script');
+    naverMapScript.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverClientId}&submodules=geocoder`;
+    naverMapScript.type = 'text/javascript';
+    naverMapScript.async = true;
+    naverMapScript.onload = () => {
+      setLoadedNaverMapScript(true);
     };
 
-    document.body.appendChild(script);
+    document.body.appendChild(naverMapScript);
 
     return () => {
-      document.body.removeChild(script);
+      document.body.removeChild(naverMapScript);
     };
-  }, [clientId]);
+  }, [naverClientId]);
 
   useEffect(() => {
-    if (!loadedMapScript) {
+    if (!loadedNaverMapScript) {
       return;
     }
 
@@ -112,18 +120,20 @@ export const CommonMap = ({
     listeners.push(
       mapRef.current.addListener('center_changed', handleChangeCenter),
       mapRef.current.addListener('init', () => {
-        setInitMap(true);
+        setInitNaverMap(true);
       }),
     );
+
+    onLoaded?.();
 
     return () => {
       mapRef.current?.removeListener(listeners);
     };
-  }, [loadedMapScript]);
+  }, [loadedNaverMapScript]);
 
   return (
     <div className={clsx(styles.map, className)} ref={mapElementRef}>
-      {!loadedMapScript && <Skeleton height="100%" width="100%" />}
+      {!loadedNaverMapScript && <Skeleton height="100%" width="100%" />}
     </div>
   );
 };

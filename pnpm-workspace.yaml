@@ -19,3 +19,6 @@ catalog:
   clsx: ^2
   zustand: ^5
   'babel-plugin-react-compiler': ^1
+  sass: ^1
+  nanoid: ^5
+  'kakao.maps.d.ts': ^0.1.40

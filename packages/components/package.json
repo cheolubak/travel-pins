@@ -10,11 +10,15 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@types/navermaps": "catalog:",
-    "@types/node": "catalog:"
+    "@types/node": "catalog:",
+    "tailwindcss": "catalog:",
+    "sass": "catalog:"
   },
   "dependencies": {
     "react": "catalog:",
     "react-dom": "catalog:",
-    "clsx": "catalog:"
+    "clsx": "catalog:",
+    "nanoid": "catalog:",
+    "zustand": "catalog:"
   }
 }

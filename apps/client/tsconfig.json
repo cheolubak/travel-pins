@@ -3,7 +3,8 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "types": ["kakao.maps.d.ts", "navermaps"]
   },
   "include": [
     "next-env.d.ts",
