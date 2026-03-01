@@ -1,0 +1,9 @@
+{
+  "name": "@travel-pins/request",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "catalog:"
+  }
+}

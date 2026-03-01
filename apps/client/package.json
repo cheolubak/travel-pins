@@ -12,6 +12,7 @@
     "@travel-pins/components": "workspace:*",
     "@travel-pins/tailwind": "workspace:*",
     "@travel-pins/domains": "workspace:*",
+    "@travel-pins/request": "workspace:*",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",

@@ -12,13 +12,15 @@
     "@types/navermaps": "catalog:",
     "@types/node": "catalog:",
     "tailwindcss": "catalog:",
-    "sass": "catalog:"
+    "sass": "catalog:",
+    "@types/lodash": "catalog:"
   },
   "dependencies": {
     "react": "catalog:",
     "react-dom": "catalog:",
     "clsx": "catalog:",
     "nanoid": "catalog:",
-    "zustand": "catalog:"
+    "zustand": "catalog:",
+    "lodash": "catalog:"
   }
 }

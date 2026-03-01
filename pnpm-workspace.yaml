@@ -22,3 +22,6 @@ catalog:
   sass: ^1
   nanoid: ^5
   'kakao.maps.d.ts': ^0.1.40
+  lodash: ^4
+  '@types/lodash': ^4
+  zod: ^4

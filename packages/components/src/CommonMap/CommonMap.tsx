@@ -3,6 +3,7 @@
 import type { Position } from '@travel-pins/domains';
 
 import { clsx } from 'clsx';
+import throttle from 'lodash/throttle';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
@@ -15,8 +16,8 @@ interface MapProps {
   cafeList?: Position[];
   className?: string;
   initCenter?: Position;
-  kakaoAppKey: string;
   naverClientId: string;
+  onChangeBounds?: (leftBottom: Position, rightTop: Position) => void;
   onChangePosition?: (position: Position) => void;
   onLoaded?: () => void;
   position?: Position;
@@ -29,8 +30,8 @@ export const CommonMap = ({
     lat: 37.3595704,
     lng: 127.105399,
   },
-  kakaoAppKey,
   naverClientId,
+  onChangeBounds,
   onChangePosition,
   onLoaded,
   position,
@@ -109,11 +110,21 @@ export const CommonMap = ({
 
     mapRef.current = new naver.maps.Map(mapElementRef.current, mapOptions);
 
-    const handleChangeCenter = (latlng: naver.maps.LatLng) => {
+    const handleChangeCenter = throttle((latlng: naver.maps.LatLng) => {
       const lat = latlng.lat();
       const lng = latlng.lng();
       onChangePosition?.({ lat, lng });
-    };
+    }, 300);
+
+    const handleChangeBounds = throttle((bounds: naver.maps.LatLngBounds) => {
+      const sw = bounds.getSW();
+      const ne = bounds.getNE();
+
+      onChangeBounds?.(
+        { lat: sw.lat(), lng: sw.lng() },
+        { lat: ne.lat(), lng: ne.lng() },
+      );
+    }, 300);
 
     const listeners: naver.maps.MapEventListener[] = [];
 
@@ -122,6 +133,7 @@ export const CommonMap = ({
       mapRef.current.addListener('init', () => {
         setInitNaverMap(true);
       }),
+      mapRef.current.addListener('bounds_changed', handleChangeBounds),
     );
 
     onLoaded?.();

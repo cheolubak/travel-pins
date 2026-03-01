@@ -12,6 +12,9 @@ catalogs:
     '@tailwindcss/postcss':
       specifier: ^4
       version: 4.2.1
+    '@types/lodash':
+      specifier: ^4
+      version: 4.17.24
     '@types/navermaps':
       specifier: ^3
       version: 3.9.1
@@ -33,6 +36,9 @@ catalogs:
     kakao.maps.d.ts:
       specifier: ^0.1.40
       version: 0.1.40
+    lodash:
+      specifier: ^4
+      version: 4.17.23
     nanoid:
       specifier: ^5
       version: 5.1.6
@@ -60,6 +66,9 @@ catalogs:
     vite:
       specifier: ^7
       version: 7.3.1
+    zod:
+      specifier: ^4
+      version: 4.3.6
     zustand:
       specifier: ^5
       version: 5.0.11
@@ -119,6 +128,9 @@ importers:
       '@travel-pins/domains':
         specifier: workspace:*
         version: link:../../packages/domains
+      '@travel-pins/request':
+        specifier: workspace:*
+        version: link:../../packages/request
       '@travel-pins/tailwind':
         specifier: workspace:*
         version: link:../../packages/configs/tailwind
@@ -171,6 +183,9 @@ importers:
       clsx:
         specifier: 'catalog:'
         version: 2.1.1
+      lodash:
+        specifier: 'catalog:'
+        version: 4.17.23
       nanoid:
         specifier: 'catalog:'
         version: 5.1.6
@@ -193,6 +208,9 @@ importers:
       '@travel-pins/tsconfig':
         specifier: workspace:*
         version: link:../configs/tsconfig
+      '@types/lodash':
+        specifier: 'catalog:'
+        version: 4.17.24
       '@types/navermaps':
         specifier: 'catalog:'
         version: 3.9.1
@@ -251,7 +269,17 @@ importers:
 
   packages/configs/tsconfig: {}
 
-  packages/domains: {}
+  packages/domains:
+    dependencies:
+      zod:
+        specifier: 'catalog:'
+        version: 4.3.6
+
+  packages/request:
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 20.19.34
 
 packages:
 
@@ -1255,6 +1283,9 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
+  '@types/lodash@4.17.24':
+    resolution: {integrity: sha512-gIW7lQLZbue7lRSWEFql49QJJWThrTFFeIMJdp3eH4tKoxm1OvEPg02rm4wCCSHS0cL3/Fizimb35b7k8atwsQ==}
+
   '@types/navermaps@3.9.1':
     resolution: {integrity: sha512-XCYtuJ0mYaXx5lBeB0iahk+sPG7Q9tLHQGR6AkGCOGwrRG8qowdG5/FIYlI7am59j/Hm4vaiR+eRZ31kTgMWjA==}
 
@@ -2186,6 +2217,9 @@ packages:
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
+
+  lodash@4.17.23:
+    resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
 
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
@@ -3699,6 +3733,8 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
+  '@types/lodash@4.17.24': {}
+
   '@types/navermaps@3.9.1':
     dependencies:
       '@types/geojson': 7946.0.16
@@ -4783,6 +4819,8 @@ snapshots:
       p-locate: 5.0.0
 
   lodash.merge@4.6.2: {}
+
+  lodash@4.17.23: {}
 
   loose-envify@1.4.0:
     dependencies:

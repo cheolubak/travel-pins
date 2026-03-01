@@ -6,9 +6,12 @@ import { CommonMap } from '@travel-pins/components';
 
 import { useLoadedMap } from '@/src/features/map/stores/useLoadedMap';
 import { useMap } from '@/src/features/map/stores/useMap';
+import { usePlaces } from '@/src/features/map/stores/usePlaces';
 
 export const MapView = () => {
   const setLoadedMap = useLoadedMap((state) => state.setLoaded);
+
+  const { places, searchPlaces } = usePlaces((state) => state);
 
   const { position, setPosition } = useMap((state) => state);
 
@@ -16,16 +19,24 @@ export const MapView = () => {
     setPosition(position);
   };
 
+  const handleChangeBounds = (leftBottom: Position, rightTop: Position) => {
+    console.log('=======handlechangeBounds=======');
+    searchPlaces(leftBottom, rightTop);
+  };
+
+  console.log('=======places=======', places);
+
   if (!process.env.NAVER_CLIENT_ID || !process.env.KAKAO_APP_KEY) {
     return null;
   }
 
   return (
     <CommonMap
+      cafeList={places.map((x) => ({ lat: x.lat, lng: x.lng }))}
       className={'fixed top-0 left-0 w-screen h-screen'}
       initCenter={position}
-      kakaoAppKey={process.env.KAKAO_APP_KEY}
       naverClientId={process.env.NAVER_CLIENT_ID}
+      onChangeBounds={handleChangeBounds}
       onChangePosition={handleChangePosition}
       onLoaded={setLoadedMap}
       position={position}
