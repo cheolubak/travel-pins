@@ -5,22 +5,30 @@ import { placeSchema } from '@travel-pins/domains';
 import { externalApi } from '@travel-pins/request';
 import { NextResponse } from 'next/server';
 
+import { bffTemplate } from '@/src/features/common/helpers/bffTemplate';
+
 export async function GET(req: NextRequest) {
-  const { searchParams } = req.nextUrl;
+  return bffTemplate(req, async ({ accessToken, sessionId }) => {
+    const { searchParams } = req.nextUrl;
 
-  const leftBottomLat = searchParams.get('leftBottomLat');
-  const leftBottomLng = searchParams.get('leftBottomLng');
-  const rightTopLat = searchParams.get('rightTopLat');
-  const rightTopLng = searchParams.get('rightTopLng');
+    const leftBottomLat = searchParams.get('leftBottomLat');
+    const leftBottomLng = searchParams.get('leftBottomLng');
+    const rightTopLat = searchParams.get('rightTopLat');
+    const rightTopLng = searchParams.get('rightTopLng');
 
-  const res = await externalApi.get<Place[]>('places', {
-    params: {
-      leftBottomLat,
-      leftBottomLng,
-      rightTopLat,
-      rightTopLng,
-    },
+    const res = await externalApi.get<Place[]>('places', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        sessionId,
+      },
+      params: {
+        leftBottomLat,
+        leftBottomLng,
+        rightTopLat,
+        rightTopLng,
+      },
+    });
+
+    return NextResponse.json(placeSchema.array().parse(res));
   });
-
-  return NextResponse.json(placeSchema.array().parse(res));
 }

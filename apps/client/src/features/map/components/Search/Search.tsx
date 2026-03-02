@@ -12,6 +12,7 @@ import {
 import { useEffect } from 'react';
 import { useRef } from 'react';
 
+import { useInitKakao } from '@/src/features/map/stores/useInitKakao';
 import { useLoadedMap } from '@/src/features/map/stores/useLoadedMap';
 import { useMap } from '@/src/features/map/stores/useMap';
 
@@ -19,16 +20,21 @@ import styles from './Search.module.css';
 
 export const Search = () => {
   const { open } = useModal();
+  const initKakaoMap = useInitKakao((state) => state.initKakaoMap);
 
   const searchAddress = useMap((state) => state.searchPosition);
 
   const placeRef = useRef<kakao.maps.services.Places | null>(null);
 
   useEffect(() => {
+    if (!initKakaoMap) {
+      return;
+    }
+
     kakao.maps.load(() => {
       placeRef.current = new kakao.maps.services.Places();
     });
-  }, []);
+  }, [initKakaoMap]);
 
   const handleKeyboardEvent = (e: KeyboardEvent<HTMLInputElement>) => {
     const { key } = e;
@@ -47,8 +53,6 @@ export const Search = () => {
           </Modal>,
         );
       }
-
-      console.log('=======data=======', data, pagination);
     });
 
     searchAddress(value).catch((err) => {

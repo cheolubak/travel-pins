@@ -4,7 +4,7 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "types": ["kakao.maps.d.ts", "navermaps"]
+    "types": ["kakao.maps.d.ts", "navermaps", "@travel-pins/types"]
   },
   "include": [
     "next-env.d.ts",

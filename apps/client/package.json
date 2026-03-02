@@ -13,14 +13,17 @@
     "@travel-pins/tailwind": "workspace:*",
     "@travel-pins/domains": "workspace:*",
     "@travel-pins/request": "workspace:*",
+    "@travel-pins/types": "workspace:*",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "zustand": "catalog:"
+    "zustand": "catalog:",
+    "uuid": "catalog:"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",
     "@travel-pins/tsconfig": "workspace:*",
+    "@travel-pins/types": "workspace:*",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",

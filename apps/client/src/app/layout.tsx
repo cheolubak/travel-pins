@@ -5,6 +5,9 @@ import { GlobalModal } from '@travel-pins/components';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Script from 'next/script';
 
+import { Header } from '@/src/features/common/components/Header';
+import { KakaoScript } from '@/src/features/common/components/KakaoScript';
+
 import './globals.css';
 
 const geistSans = Geist({
@@ -32,9 +35,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Script
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_APP_KEY}&autoload=false&libraries=services,clusterer,drawing`}
-        />
+        <KakaoScript />
+        <Header />
         {children}
         <GlobalModal />
       </body>

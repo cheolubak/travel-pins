@@ -127,6 +127,7 @@ export class RequestInstance {
 
     const fetchOptions: RequestInit = {
       ...options,
+      credentials: 'include',
       headers,
       method,
     };

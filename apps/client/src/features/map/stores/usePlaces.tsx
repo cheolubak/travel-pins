@@ -11,7 +11,6 @@ interface PlacesState {
 export const usePlaces = create<PlacesState>((set) => ({
   places: [],
   searchPlaces: async (leftBottom: Position, rightTop: Position) => {
-    console.log('=======searchPlaces=======');
     const { lat: leftBottomLat, lng: leftBottomLng } = leftBottom;
     const { lat: rightTopLat, lng: rightTopLng } = rightTop;
 
@@ -23,8 +22,6 @@ export const usePlaces = create<PlacesState>((set) => ({
         rightTopLng,
       },
     });
-
-    console.log('=======res=======', res);
 
     set(() => ({ places: res }));
   },

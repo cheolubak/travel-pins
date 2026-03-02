@@ -63,6 +63,9 @@ catalogs:
     typescript:
       specifier: ^5
       version: 5.9.3
+    uuid:
+      specifier: ^13
+      version: 13.0.0
     vite:
       specifier: ^7
       version: 7.3.1
@@ -134,6 +137,9 @@ importers:
       '@travel-pins/tailwind':
         specifier: workspace:*
         version: link:../../packages/configs/tailwind
+      '@travel-pins/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       next:
         specifier: 'catalog:'
         version: 16.1.6(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.97.3)
@@ -143,6 +149,9 @@ importers:
       react-dom:
         specifier: 'catalog:'
         version: 19.2.3(react@19.2.3)
+      uuid:
+        specifier: 'catalog:'
+        version: 13.0.0
       zustand:
         specifier: 'catalog:'
         version: 5.0.11(@types/react@19.2.14)(react@19.2.3)(use-sync-external-store@1.6.0(react@19.2.3))
@@ -280,6 +289,8 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 20.19.34
+
+  packages/types: {}
 
 packages:
 
@@ -2810,6 +2821,10 @@ packages:
     resolution: {integrity: sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  uuid@13.0.0:
+    resolution: {integrity: sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==}
+    hasBin: true
 
   vite-plugin-storybook-nextjs@3.2.2:
     resolution: {integrity: sha512-ZJXCrhi9mW4jEJTKhJ5sUtpBe84mylU40me2aMuLSgIJo4gE/Rc559hZvMYLFTWta1gX7Rm8Co5EEHakPct+wA==}
@@ -5526,6 +5541,8 @@ snapshots:
   use-sync-external-store@1.6.0(react@19.2.3):
     dependencies:
       react: 19.2.3
+
+  uuid@13.0.0: {}
 
   vite-plugin-storybook-nextjs@3.2.2(next@16.1.6(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.97.3))(storybook@10.2.13(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3)(vite@7.3.1(@types/node@20.19.34)(jiti@2.6.1)(lightningcss@1.31.1)(sass@1.97.3)):
     dependencies:

@@ -20,11 +20,8 @@ export const MapView = () => {
   };
 
   const handleChangeBounds = (leftBottom: Position, rightTop: Position) => {
-    console.log('=======handlechangeBounds=======');
     searchPlaces(leftBottom, rightTop);
   };
-
-  console.log('=======places=======', places);
 
   if (!process.env.NAVER_CLIENT_ID || !process.env.KAKAO_APP_KEY) {
     return null;

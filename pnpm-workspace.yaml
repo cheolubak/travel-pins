@@ -25,3 +25,4 @@ catalog:
   lodash: ^4
   '@types/lodash': ^4
   zod: ^4
+  uuid: ^13

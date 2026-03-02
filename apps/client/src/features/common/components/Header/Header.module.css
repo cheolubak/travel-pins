@@ -1,0 +1,10 @@
+@reference '@travel-pins/tailwind/globals.css';
+
+.header {
+    @apply h-16;
+    @apply flex;
+    @apply justify-end;
+    @apply items-center;
+    @apply gap-2;
+    @apply px-4 md:px-8;
+}
