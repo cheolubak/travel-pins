@@ -5,8 +5,8 @@ import { GlobalModal } from '@travel-pins/components';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Script from 'next/script';
 
+import { ExternalScript } from '@/src/features/common/components/ExternalScript';
 import { Header } from '@/src/features/common/components/Header';
-import { KakaoScript } from '@/src/features/common/components/KakaoScript';
 
 import './globals.css';
 
@@ -35,7 +35,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <KakaoScript />
+        <ExternalScript />
         <Header />
         {children}
         <GlobalModal />

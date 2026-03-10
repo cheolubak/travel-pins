@@ -1,10 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.v2.json",
-  "globalEnv": ["NAVER_CLIENT_ID", "NAVER_CLIENT_SECRET"],
+  "globalEnv": ["NAVER_MAP_CLIENT_ID", "NAVER_MAP_CLIENT_SECRET"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**", "app/**", "public/**", "next.config.ts", "tsconfig.json", "package.json"],
+      "inputs": [
+        "src/**",
+        "app/**",
+        "public/**",
+        "next.config.ts",
+        "tsconfig.json",
+        "package.json"
+      ],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "dev": {
@@ -14,7 +21,15 @@
     },
     "lint": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**", "app/**", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.mjs", "package.json"],
+      "inputs": [
+        "src/**",
+        "app/**",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js",
+        "**/*.mjs",
+        "package.json"
+      ],
       "outputs": []
     },
     "start": {

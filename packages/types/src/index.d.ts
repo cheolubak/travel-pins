@@ -5,3 +5,4 @@
 /// <reference path="kakao.channel.d.ts" />
 /// <reference path="kakao.navi.d.ts" />
 /// <reference path="kakao.picker.d.ts" />
+/// <reference path="naver.d.ts" />

@@ -65,3 +65,5 @@ export * from './IconStopFill';
 export * from './IconStore';
 export * from './IconVisibility';
 export * from './IconMap';
+export * from './IconParking';
+export * from './IconPlace';

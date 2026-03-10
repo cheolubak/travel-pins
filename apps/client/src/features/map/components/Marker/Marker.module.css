@@ -1,0 +1,22 @@
+@reference '@travel-pins/tailwind/globals.css';
+
+.marker {
+    @apply relative;
+    @apply w-8;
+    @apply h-8;
+    @apply bg-black;
+    @apply rounded-full;
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
+}
+
+.myPlaceMarker {
+    @apply w-5;
+    @apply h-5;
+    @apply rounded-full;
+    @apply absolute;
+    @apply -top-2.5;
+    @apply -right-2.5;
+    @apply bg-yellow-500;
+}

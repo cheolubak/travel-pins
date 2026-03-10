@@ -2,10 +2,11 @@
 
 import Script from 'next/script';
 
-import { useInitKakao } from '@/src/features/map/stores/useInitKakao';
+import { useInitExternalKakao } from '@/src/features/map/stores/useInitExternalKakao';
 
-export const KakaoScript = () => {
-  const { loadedKakaoMap, loadedKakaoSdk } = useInitKakao((state) => state);
+export const ExternalScript = () => {
+  const { loadedKakaoMap, loadedKakaoSdk, loadedNaverLogin } =
+    useInitExternalKakao((state) => state);
   return (
     <>
       <Script
@@ -23,6 +24,19 @@ export const KakaoScript = () => {
           Kakao.init(process.env.KAKAO_APP_KEY);
         }}
         src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.9/kakao.min.js"
+      />
+      <Script
+        onLoad={() => {
+          if (
+            !process.env.NAVER_LOIGIN_CLIENT_ID ||
+            !process.env.NAVER_LOIGIN_CALLBACK_URL
+          ) {
+            return;
+          }
+
+          loadedNaverLogin();
+        }}
+        src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"
       />
     </>
   );

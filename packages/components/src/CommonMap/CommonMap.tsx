@@ -1,21 +1,21 @@
 'use client';
 
 import type { Position } from '@travel-pins/domains';
+import type { ReactNode } from 'react';
 
 import { clsx } from 'clsx';
 import throttle from 'lodash/throttle';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import { Icon } from '../Icon';
 import { Skeleton } from '../Skeleton';
 
 import styles from './CommonMap.module.css';
 
 interface MapProps {
-  cafeList?: Position[];
   className?: string;
   initCenter?: Position;
+  markers?: { content: ReactNode; id: string; position: Position }[];
   naverClientId: string;
   onChangeBounds?: (leftBottom: Position, rightTop: Position) => void;
   onChangePosition?: (position: Position) => void;
@@ -24,12 +24,12 @@ interface MapProps {
 }
 
 export const CommonMap = ({
-  cafeList,
   className,
   initCenter = {
     lat: 37.3595704,
     lng: 127.105399,
   },
+  markers,
   naverClientId,
   onChangeBounds,
   onChangePosition,
@@ -43,6 +43,8 @@ export const CommonMap = ({
   const [loadedNaverMapScript, setLoadedNaverMapScript] = useState(false);
   const [initNaverMap, setInitNaverMap] = useState(false);
 
+  const markersRef = useRef<Map<string, naver.maps.Marker>>(new Map());
+
   const { lat, lng } = initCenter;
 
   useEffect(() => {
@@ -55,26 +57,27 @@ export const CommonMap = ({
   }, [position]);
 
   useEffect(() => {
-    if (
-      !initNaverMap ||
-      !mapRef.current ||
-      !cafeList ||
-      cafeList.length === 0
-    ) {
+    if (!initNaverMap || !mapRef.current || !markers || markers.length === 0) {
       return;
     }
 
-    cafeList.forEach((pos) => {
-      const marker = new naver.maps.Marker({
-        icon: {
-          content: renderToStaticMarkup(<Icon name="cafe" size={48} />),
-          size: new naver.maps.Size(48, 48),
-        },
-        map: mapRef.current!,
-        position: new naver.maps.LatLng(pos.lat, pos.lng),
-      });
+    markers.forEach(({ content, id, position }) => {
+      if (!markersRef.current.has(id)) {
+        markersRef.current.set(
+          id,
+          new naver.maps.Marker({
+            icon: {
+              anchor: new naver.maps.Point(16, 16),
+              content: renderToStaticMarkup(content),
+              size: new naver.maps.Size(48, 48),
+            },
+            map: mapRef.current!,
+            position: new naver.maps.LatLng(position.lat, position.lng),
+          }),
+        );
+      }
     });
-  }, [initNaverMap, cafeList]);
+  }, [initNaverMap, markers]);
 
   useLayoutEffect(() => {
     const naverMapScript = document.createElement('script');
@@ -110,10 +113,27 @@ export const CommonMap = ({
 
     mapRef.current = new naver.maps.Map(mapElementRef.current, mapOptions);
 
+    const handleInitMap = () => {
+      setInitNaverMap(true);
+
+      if (!mapRef.current) {
+        return;
+      }
+
+      const mapBounds = mapRef.current.getBounds();
+
+      onChangeBounds?.(
+        { lat: mapBounds.getMin().y, lng: mapBounds.getMin().x },
+        { lat: mapBounds.getMax().y, lng: mapBounds.getMax().x },
+      );
+    };
+
     const handleChangeCenter = throttle((latlng: naver.maps.LatLng) => {
       const lat = latlng.lat();
       const lng = latlng.lng();
       onChangePosition?.({ lat, lng });
+
+      handleUpdateMarkers();
     }, 300);
 
     const handleChangeBounds = throttle((bounds: naver.maps.LatLngBounds) => {
@@ -126,20 +146,67 @@ export const CommonMap = ({
       );
     }, 300);
 
+    const handleUpdateMarkers = () => {
+      if (!mapRef.current) {
+        return;
+      }
+
+      const mapBounds = mapRef.current.getBounds();
+      const markers = [...markersRef.current.values()];
+
+      markers.forEach((marker) => {
+        if (mapBounds.hasPoint(marker.getPosition())) {
+          showMarker(marker);
+        } else {
+          hideMarker(marker);
+        }
+      });
+    };
+
+    const showMarker = (marker: naver.maps.Marker) => {
+      if (!mapRef.current) {
+        return;
+      }
+      if (marker.getMap()) {
+        return;
+      }
+
+      marker.setMap(mapRef.current);
+    };
+
+    const hideMarker = (marker: naver.maps.Marker) => {
+      if (!marker.getMap()) {
+        return;
+      }
+
+      marker.setMap(null);
+    };
+
     const listeners: naver.maps.MapEventListener[] = [];
 
     listeners.push(
-      mapRef.current.addListener('center_changed', handleChangeCenter),
-      mapRef.current.addListener('init', () => {
-        setInitNaverMap(true);
-      }),
-      mapRef.current.addListener('bounds_changed', handleChangeBounds),
+      naver.maps.Event.addListener(
+        mapRef.current,
+        'center_changes',
+        handleChangeCenter,
+      ),
+      naver.maps.Event.addListener(
+        mapRef.current,
+        'center_changed',
+        handleChangeCenter,
+      ),
+      naver.maps.Event.addListener(mapRef.current, 'init', handleInitMap),
+      naver.maps.Event.addListener(
+        mapRef.current,
+        'bounds_changed',
+        handleChangeBounds,
+      ),
     );
 
     onLoaded?.();
 
     return () => {
-      mapRef.current?.removeListener(listeners);
+      naver.maps.Event.removeListener(listeners);
     };
   }, [loadedNaverMapScript]);
 

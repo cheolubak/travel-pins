@@ -1,14 +1,16 @@
-.icon {
-    width: 1em;
-    min-width: 1em;
-    max-width: 1em;
-    height: 1em;
-    min-height: 1em;
-    max-height: 1em;
+@reference '@travel-pins/tailwind/globals.css';
 
-    & > * {
-        fill: inherit;
-        width: 100%;
-        height: 100%;
+.icon {
+    width: 1em !important;
+    min-width: 1em !important;
+    max-width: 1em !important;
+    height: 1em !important;
+    min-height: 1em !important;
+    max-height: 1em !important;
+
+    & * {
+        fill: inherit !important;
+        width: 1em !important;
+        height: 1em !important;
     }
 }

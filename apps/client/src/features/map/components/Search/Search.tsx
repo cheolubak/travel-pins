@@ -12,7 +12,7 @@ import {
 import { useEffect } from 'react';
 import { useRef } from 'react';
 
-import { useInitKakao } from '@/src/features/map/stores/useInitKakao';
+import { useInitExternalKakao } from '@/src/features/map/stores/useInitExternalKakao';
 import { useLoadedMap } from '@/src/features/map/stores/useLoadedMap';
 import { useMap } from '@/src/features/map/stores/useMap';
 
@@ -20,7 +20,7 @@ import styles from './Search.module.css';
 
 export const Search = () => {
   const { open } = useModal();
-  const initKakaoMap = useInitKakao((state) => state.initKakaoMap);
+  const initKakaoMap = useInitExternalKakao((state) => state.initKakaoMap);
 
   const searchAddress = useMap((state) => state.searchPosition);
 

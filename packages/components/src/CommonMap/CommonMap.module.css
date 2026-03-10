@@ -1,4 +1,4 @@
-@reference '@travel-pins/tailwind/globals.css'
+@reference '@travel-pins/tailwind/globals.css';
 
 .map {
     @apply min-w-[400px];
