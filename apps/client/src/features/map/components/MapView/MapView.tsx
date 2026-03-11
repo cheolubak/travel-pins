@@ -5,6 +5,7 @@ import type { Position } from '@travel-pins/domains';
 import { CommonMap } from '@travel-pins/components';
 
 import { Marker } from '@/src/features/map/components/Marker';
+import { useExternalScripts } from '@/src/features/map/stores/useExternalScripts';
 import { useLoadedMap } from '@/src/features/map/stores/useLoadedMap';
 import { useMap } from '@/src/features/map/stores/useMap';
 import { usePlaces } from '@/src/features/map/stores/usePlaces';
@@ -12,21 +13,17 @@ import { usePlaces } from '@/src/features/map/stores/usePlaces';
 export const MapView = () => {
   const setLoadedMap = useLoadedMap((state) => state.setLoaded);
 
-  const { places, searchPlaces } = usePlaces((state) => state);
+  const places = usePlaces((state) => state.places);
+  const searchPlaces = usePlaces((state) => state.searchPlaces);
 
-  const { position, setPosition } = useMap((state) => state);
+  const position = useMap((state) => state.position);
+  const setPosition = useMap((state) => state.setPosition);
 
-  const handleChangePosition = (position: Position) => {
-    setPosition(position);
-  };
+  const naverMapLoaded = useExternalScripts((state) => state.initNaverMap);
 
   const handleChangeBounds = (leftBottom: Position, rightTop: Position) => {
     searchPlaces(leftBottom, rightTop);
   };
-
-  if (!process.env.NAVER_MAP_CLIENT_ID || !process.env.KAKAO_APP_KEY) {
-    return null;
-  }
 
   return (
     <CommonMap
@@ -37,9 +34,9 @@ export const MapView = () => {
         id: x.id,
         position: { lat: x.lat, lng: x.lng },
       }))}
-      naverClientId={process.env.NAVER_MAP_CLIENT_ID}
+      naverMapLoaded={naverMapLoaded}
       onChangeBounds={handleChangeBounds}
-      onChangePosition={handleChangePosition}
+      onChangePosition={setPosition}
       onLoaded={setLoadedMap}
       position={position}
     />

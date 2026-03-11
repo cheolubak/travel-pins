@@ -11,17 +11,20 @@ export const Header = () => {
 
   const handleLoginWithKakao = () => {
     Kakao.Auth.authorize({
-      redirectUri: 'http://localhost:3000/auth/callback',
+      redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
     });
   };
 
   const handleLoginWithNaver = () => {
     const searchParams = new URLSearchParams();
-    searchParams.set('client_id', process.env.NAVER_LOGIN_CLIENT_ID!);
+    searchParams.set(
+      'client_id',
+      process.env.NEXT_PUBLIC_NAVER_LOGIN_CLIENT_ID!,
+    );
     searchParams.set('response_type', 'code');
     searchParams.set(
       'redirect_uri',
-      'http://localhost:3000/auth/callback/naver',
+      `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback/naver`,
     );
 
     router.push(
@@ -33,15 +36,29 @@ export const Header = () => {
     open(
       <Modal className={'flex flex-col justify-center items-center gap-4'}>
         <Typography>로그인</Typography>
-        <button onClick={handleLoginWithKakao}>카카오 로그인</button>
-        <button onClick={handleLoginWithNaver}>네이버 로그인</button>
+        <button
+          aria-label="카카오 로그인"
+          onClick={handleLoginWithKakao}
+          type="button"
+        >
+          카카오 로그인
+        </button>
+        <button
+          aria-label="네이버 로그인"
+          onClick={handleLoginWithNaver}
+          type="button"
+        >
+          네이버 로그인
+        </button>
       </Modal>,
     );
   };
 
   return (
     <header className={styles.header}>
-      <Icon name="person" onClick={handleClickMyPage} />
+      <button aria-label="마이페이지" onClick={handleClickMyPage} type="button">
+        <Icon name="person" />
+      </button>
     </header>
   );
 };

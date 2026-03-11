@@ -1,3 +1,5 @@
+import { FetchError } from './FetchError';
+
 export interface RequestConfig {
   baseURL?: string;
   headers?: HeadersInit;
@@ -15,17 +17,6 @@ export interface RequestOptions extends Omit<RequestInit, 'body' | 'method'> {
 interface NextFetchRequestConfig {
   revalidate?: false | number;
   tags?: string[];
-}
-
-export class FetchError extends Error {
-  constructor(
-    message: string,
-    public status: number,
-    public response: Response,
-  ) {
-    super(message);
-    this.name = 'FetchError';
-  }
 }
 
 export class RequestInstance {

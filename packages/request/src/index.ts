@@ -1,7 +1,7 @@
+export { FetchError } from './FetchError';
 export {
   externalApi,
   fetchApi,
-  FetchError,
   request,
   RequestInstance,
 } from './request';

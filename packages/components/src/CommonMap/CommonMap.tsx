@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 
 import { clsx } from 'clsx';
 import throttle from 'lodash/throttle';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import { Skeleton } from '../Skeleton';
@@ -16,7 +16,7 @@ interface MapProps {
   className?: string;
   initCenter?: Position;
   markers?: { content: ReactNode; id: string; position: Position }[];
-  naverClientId: string;
+  naverMapLoaded: boolean;
   onChangeBounds?: (leftBottom: Position, rightTop: Position) => void;
   onChangePosition?: (position: Position) => void;
   onLoaded?: () => void;
@@ -30,7 +30,7 @@ export const CommonMap = ({
     lng: 127.105399,
   },
   markers,
-  naverClientId,
+  naverMapLoaded,
   onChangeBounds,
   onChangePosition,
   onLoaded,
@@ -40,7 +40,6 @@ export const CommonMap = ({
 
   const mapRef = useRef<naver.maps.Map>(null);
 
-  const [loadedNaverMapScript, setLoadedNaverMapScript] = useState(false);
   const [initNaverMap, setInitNaverMap] = useState(false);
 
   const markersRef = useRef<Map<string, naver.maps.Marker>>(new Map());
@@ -57,9 +56,18 @@ export const CommonMap = ({
   }, [position]);
 
   useEffect(() => {
-    if (!initNaverMap || !mapRef.current || !markers || markers.length === 0) {
+    if (!initNaverMap || !mapRef.current || !markers) {
       return;
     }
+
+    const currentIds = new Set(markers.map((m) => m.id));
+
+    markersRef.current.forEach((marker, id) => {
+      if (!currentIds.has(id)) {
+        marker.setMap(null);
+        markersRef.current.delete(id);
+      }
+    });
 
     markers.forEach(({ content, id, position }) => {
       if (!markersRef.current.has(id)) {
@@ -79,24 +87,8 @@ export const CommonMap = ({
     });
   }, [initNaverMap, markers]);
 
-  useLayoutEffect(() => {
-    const naverMapScript = document.createElement('script');
-    naverMapScript.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverClientId}&submodules=geocoder`;
-    naverMapScript.type = 'text/javascript';
-    naverMapScript.async = true;
-    naverMapScript.onload = () => {
-      setLoadedNaverMapScript(true);
-    };
-
-    document.body.appendChild(naverMapScript);
-
-    return () => {
-      document.body.removeChild(naverMapScript);
-    };
-  }, [naverClientId]);
-
   useEffect(() => {
-    if (!loadedNaverMapScript) {
+    if (!naverMapLoaded) {
       return;
     }
 
@@ -187,11 +179,6 @@ export const CommonMap = ({
     listeners.push(
       naver.maps.Event.addListener(
         mapRef.current,
-        'center_changes',
-        handleChangeCenter,
-      ),
-      naver.maps.Event.addListener(
-        mapRef.current,
         'center_changed',
         handleChangeCenter,
       ),
@@ -208,11 +195,11 @@ export const CommonMap = ({
     return () => {
       naver.maps.Event.removeListener(listeners);
     };
-  }, [loadedNaverMapScript]);
+  }, [naverMapLoaded]);
 
   return (
     <div className={clsx(styles.map, className)} ref={mapElementRef}>
-      {!loadedNaverMapScript && <Skeleton height="100%" width="100%" />}
+      {!naverMapLoaded && <Skeleton height="100%" width="100%" />}
     </div>
   );
 };

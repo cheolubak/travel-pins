@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server';
 
+import { FetchError } from '@travel-pins/request';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
@@ -30,6 +31,7 @@ export const bffTemplate = async (
 
     return await work({ accessToken, sessionId });
   } catch (e) {
-    return NextResponse.json({ message: '오류' }, { status: 500 });
+    const status = e instanceof FetchError ? e.status : 500;
+    return NextResponse.json({ message: '오류' }, { status });
   }
 };

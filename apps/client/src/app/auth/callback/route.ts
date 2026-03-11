@@ -25,8 +25,11 @@ export async function GET(req: NextRequest) {
     const formData = new FormData();
     formData.append('grant_type', 'authorization_code');
     formData.append('client_id', process.env.KAKAO_REST_KEY);
-    formData.append('client_secret', 'mZLwBt0B1lNBPdhJ19fNRlMwWusOJwjT');
-    formData.append('redirect_uri', 'http://localhost:3000/auth/callback');
+    formData.append('client_secret', process.env.KAKAO_CLIENT_SECRET!);
+    formData.append(
+      'redirect_uri',
+      `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
+    );
     formData.append('code', code);
 
     const res = await fetch('https://kauth.kakao.com/oauth/token', {
@@ -53,8 +56,15 @@ export async function GET(req: NextRequest) {
       refreshToken: string;
     }>('auth/kakao', { accessToken: token.access_token, sessionId });
 
-    cookieStore.set(ACCESS_TOKEN_KEY, accessToken);
-    cookieStore.set(REFRESH_TOKEN_KEY, refreshToken);
+    const cookieOptions = {
+      httpOnly: true,
+      path: '/',
+      sameSite: 'lax' as const,
+      secure: process.env.NODE_ENV === 'production',
+    };
+
+    cookieStore.set(ACCESS_TOKEN_KEY, accessToken, cookieOptions);
+    cookieStore.set(REFRESH_TOKEN_KEY, refreshToken, cookieOptions);
 
     return NextResponse.redirect(new URL('/', req.url), {
       status: 307,

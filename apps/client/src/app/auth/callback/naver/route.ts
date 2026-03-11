@@ -1,15 +1,6 @@
-import type { NextRequest } from 'next/server';
-
 import { NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = req.nextUrl;
-
-  const code = searchParams.get('code');
-  const state = searchParams.get('state');
-  const error = searchParams.get('error');
-  const errorDescription = searchParams.get('error_description');
-  const errorUri = searchParams.get('error_uri');
-
-  return NextResponse.json({});
+// TODO: Naver 로그인 콜백 구현
+export async function GET() {
+  return NextResponse.json({ message: 'Not Implemented' }, { status: 501 });
 }

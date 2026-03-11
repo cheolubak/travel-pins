@@ -1,6 +1,15 @@
 {
   "$schema": "https://turbo.build/schema.v2.json",
-  "globalEnv": ["NAVER_MAP_CLIENT_ID", "NAVER_MAP_CLIENT_SECRET"],
+  "globalEnv": [
+    "NEXT_PUBLIC_NAVER_MAP_CLIENT_ID",
+    "NAVER_MAP_CLIENT_SECRET",
+    "NEXT_PUBLIC_KAKAO_APP_KEY",
+    "KAKAO_REST_KEY",
+    "KAKAO_CLIENT_SECRET",
+    "NEXT_PUBLIC_APP_URL",
+    "NEXT_PUBLIC_NAVER_LOGIN_CLIENT_ID",
+    "NAVER_LOGIN_CLIENT_SECRET"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

@@ -38,7 +38,7 @@ export const useMap = create<MapState>((set) => ({
     return new Promise((resolve, reject) => {
       const ps = new kakao.maps.services.Places();
 
-      ps.keywordSearch(address, (data, status, pagination) => {
+      ps.keywordSearch(address, (data, status) => {
         if (status !== kakao.maps.services.Status.OK) {
           return reject('오류가 발생했습니다. 잠시 후에 시도해주세요');
         }
