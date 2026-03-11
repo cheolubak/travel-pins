@@ -1,0 +1,10 @@
+{
+  "name": "@travel-pins/utils",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "dependencies": {
+    "tailwindcss": "catalog:",
+    "tailwind-merge": "catalog:",
+    "clsx": "catalog:"
+  }
+}
