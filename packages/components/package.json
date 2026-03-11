@@ -19,6 +19,8 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "clsx": "catalog:",
+    "class-variance-authority": "catalog:",
+    "@travel-pins/utils": "workspace:*",
     "nanoid": "catalog:",
     "zustand": "catalog:",
     "lodash": "catalog:"

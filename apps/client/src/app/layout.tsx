@@ -2,21 +2,18 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
 import { GlobalModal } from '@travel-pins/components';
-import { Geist, Geist_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 
 import { ExternalScript } from '@/src/features/common/components/ExternalScript';
 import { Header } from '@/src/features/common/components/Header';
 
 import './globals.css';
 
-const geistSans = Geist({
-  subsets: ['latin'],
-  variable: '--font-geist-sans',
-});
-
-const geistMono = Geist_Mono({
-  subsets: ['latin'],
-  variable: '--font-geist-mono',
+const pretendard = localFont({
+  src: '../../../public/fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '100 900',
+  variable: '--font-pretendard',
 });
 
 export const metadata: Metadata = {
@@ -32,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${pretendard.variable} antialiased`}
       >
         <ExternalScript />
         <Header />

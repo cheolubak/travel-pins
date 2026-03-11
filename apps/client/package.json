@@ -18,7 +18,8 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "zustand": "catalog:",
-    "uuid": "catalog:"
+    "uuid": "catalog:",
+    "pretendard": "catalog:"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",
