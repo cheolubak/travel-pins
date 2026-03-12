@@ -36,21 +36,23 @@ export const useMap = create<MapState>((set) => ({
   position: getInitialMap(),
   searchPosition: async (address: string) => {
     return new Promise((resolve, reject) => {
-      const ps = new kakao.maps.services.Places();
+      kakao.maps.load(() => {
+        const ps = new kakao.maps.services.Places();
 
-      ps.keywordSearch(address, (data, status) => {
-        if (status !== kakao.maps.services.Status.OK) {
-          return reject('오류가 발생했습니다. 잠시 후에 시도해주세요');
-        }
+        ps.keywordSearch(address, (data, status) => {
+          if (status !== kakao.maps.services.Status.OK) {
+            return reject('오류가 발생했습니다. 잠시 후에 시도해주세요');
+          }
 
-        const result = data.at(0);
-        if (!data || !result) {
-          return reject('검색 결과가 없습니다');
-        }
+          const result = data.at(0);
+          if (!data || !result) {
+            return reject('검색 결과가 없습니다');
+          }
 
-        const { x, y } = result;
-        set({ position: { lat: Number(y), lng: Number(x) } });
-        resolve();
+          const { x, y } = result;
+          set({ position: { lat: Number(y), lng: Number(x) } });
+          resolve();
+        });
       });
     });
   },
