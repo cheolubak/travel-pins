@@ -32,25 +32,33 @@ const getInitialMap = (): Position => {
   return DEFAULT_POSITION;
 };
 
-export const useMap = create<MapState>((set) => ({
+export const useMap = create<MapState>((set, get) => ({
   position: getInitialMap(),
   searchPosition: async (address: string) => {
     return new Promise((resolve, reject) => {
+      if (!window.kakao?.maps?.load) {
+        return reject(
+          new Error('지도 SDK가 아직 로드되지 않았습니다'),
+        );
+      }
+
       kakao.maps.load(() => {
         const ps = new kakao.maps.services.Places();
 
         ps.keywordSearch(address, (data, status) => {
           if (status !== kakao.maps.services.Status.OK) {
-            return reject('오류가 발생했습니다. 잠시 후에 시도해주세요');
+            return reject(
+              new Error('오류가 발생했습니다. 잠시 후에 시도해주세요'),
+            );
           }
 
           const result = data.at(0);
-          if (!data || !result) {
-            return reject('검색 결과가 없습니다');
+          if (!result) {
+            return reject(new Error('검색 결과가 없습니다'));
           }
 
           const { x, y } = result;
-          set({ position: { lat: Number(y), lng: Number(x) } });
+          get().setPosition({ lat: Number(y), lng: Number(x) });
           resolve();
         });
       });
