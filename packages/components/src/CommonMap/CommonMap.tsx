@@ -20,6 +20,7 @@ interface MapProps {
   onChangeBounds?: (leftBottom: Position, rightTop: Position) => void;
   onChangePosition?: (position: Position) => void;
   onLoaded?: () => void;
+  onMarkerClick?: (id: string) => void;
   position?: Position;
 }
 
@@ -34,6 +35,7 @@ export const CommonMap = ({
   onChangeBounds,
   onChangePosition,
   onLoaded,
+  onMarkerClick,
   position,
 }: MapProps) => {
   const mapElementRef = useRef<HTMLDivElement>(null);
@@ -71,21 +73,26 @@ export const CommonMap = ({
 
     markers.forEach(({ content, id, position }) => {
       if (!markersRef.current.has(id)) {
-        markersRef.current.set(
-          id,
-          new naver.maps.Marker({
-            icon: {
-              anchor: new naver.maps.Point(16, 16),
-              content: renderToStaticMarkup(content),
-              size: new naver.maps.Size(48, 48),
-            },
-            map: mapRef.current!,
-            position: new naver.maps.LatLng(position.lat, position.lng),
-          }),
-        );
+        const marker = new naver.maps.Marker({
+          icon: {
+            anchor: new naver.maps.Point(16, 16),
+            content: renderToStaticMarkup(content),
+            size: new naver.maps.Size(48, 48),
+          },
+          map: mapRef.current!,
+          position: new naver.maps.LatLng(position.lat, position.lng),
+        });
+
+        if (onMarkerClick) {
+          naver.maps.Event.addListener(marker, 'click', () => {
+            onMarkerClick(id);
+          });
+        }
+
+        markersRef.current.set(id, marker);
       }
     });
-  }, [initNaverMap, markers]);
+  }, [initNaverMap, markers, onMarkerClick]);
 
   useEffect(() => {
     if (!naverMapLoaded) {
