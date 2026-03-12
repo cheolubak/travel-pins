@@ -1,0 +1,1 @@
+export { MyPlacesList } from './MyPlacesList';
