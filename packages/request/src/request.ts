@@ -124,12 +124,16 @@ export class RequestInstance {
     };
 
     if (data !== undefined) {
-      const headersObj = new Headers(headers);
-      if (!headersObj.has('Content-Type')) {
-        headersObj.set('Content-Type', 'application/json');
+      if (data instanceof FormData) {
+        fetchOptions.body = data;
+      } else {
+        const headersObj = new Headers(headers);
+        if (!headersObj.has('Content-Type')) {
+          headersObj.set('Content-Type', 'application/json');
+        }
+        fetchOptions.headers = headersObj;
+        fetchOptions.body = JSON.stringify(data);
       }
-      fetchOptions.headers = headersObj;
-      fetchOptions.body = JSON.stringify(data);
     }
 
     let controller: AbortController | undefined;
