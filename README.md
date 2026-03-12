@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Travel Pins
 
-## Getting Started
+네이버 지도 기반 여행지 공유 서비스.
+방문한 장소를 저장하고, 리뷰·이미지를 남기며, 그룹 여행을 관리할 수 있습니다.
 
-First, run the development server:
+## 주요 기능
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 네이버 지도 기반 장소 검색 및 저장
+- 리뷰 작성 및 이미지 업로드
+- 그룹 여행 관리
+- 소셜 로그인 (카카오, 네이버, 구글)
+
+## 기술 스택
+
+| 분류 | 스택 |
+| --- | --- |
+| Runtime | Next.js 16, React 19, TypeScript 5 |
+| 스타일링 | Tailwind CSS 4, CVA, tailwind-merge |
+| 상태관리 | Zustand 5 |
+| 유효성 검사 | Zod 4 |
+| 빌드 | TurboRepo, pnpm 10 |
+| 폰트 | Pretendard (로컬) |
+
+## 프로젝트 구조
+
+```
+apps/client          - Next.js 프론트엔드 (@travel-pins/client)
+packages/
+  components         - 공유 UI 컴포넌트 (@travel-pins/components)
+  configs/
+    tailwind         - Tailwind 설정 (@travel-pins/tailwind)
+    tsconfig         - TypeScript 설정 (@travel-pins/tsconfig)
+    storybook        - Storybook 설정
+  domains            - 도메인 모델 (@travel-pins/domains)
+  request            - API 요청 유틸 (@travel-pins/request)
+  types              - 공유 타입 (@travel-pins/types)
+  utils              - 유틸리티 함수 (@travel-pins/utils)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 시작하기
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 사전 요구사항
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js 18+
+- pnpm 10+
 
-## Learn More
+### 설치 및 실행
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# 의존성 설치
+pnpm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# 개발 서버 실행
+pnpm dev
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# 빌드
+pnpm build
 
-## Deploy on Vercel
+# 린트
+pnpm lint
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[http://localhost:3000](http://localhost:3000)에서 확인할 수 있습니다.
