@@ -18,9 +18,22 @@ export const Header = () => {
   }, [fetchUser]);
 
   const handleLoginWithKakao = () => {
-    Kakao.Auth.authorize({
-      redirectUri: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
-    });
+    const state = crypto.randomUUID();
+
+    document.cookie = `tp_kakao_state=${state}; path=/; max-age=300; SameSite=Lax`;
+
+    const searchParams = new URLSearchParams();
+    searchParams.set('client_id', process.env.NEXT_PUBLIC_KAKAO_APP_KEY!);
+    searchParams.set('response_type', 'code');
+    searchParams.set(
+      'redirect_uri',
+      `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
+    );
+    searchParams.set('state', state);
+
+    router.push(
+      `https://kauth.kakao.com/oauth/authorize?${searchParams.toString()}`,
+    );
   };
 
   const handleLoginWithNaver = () => {
@@ -46,6 +59,10 @@ export const Header = () => {
   };
 
   const handleLoginWithGoogle = () => {
+    const state = crypto.randomUUID();
+
+    document.cookie = `tp_google_state=${state}; path=/; max-age=300; SameSite=Lax`;
+
     const searchParams = new URLSearchParams();
     searchParams.set('client_id', process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!);
     searchParams.set('response_type', 'code');
@@ -54,6 +71,7 @@ export const Header = () => {
       `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback/google`,
     );
     searchParams.set('scope', 'openid email profile');
+    searchParams.set('state', state);
 
     router.push(
       `https://accounts.google.com/o/oauth2/v2/auth?${searchParams.toString()}`,

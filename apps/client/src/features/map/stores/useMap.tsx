@@ -65,7 +65,9 @@ export const useMap = create<MapState>((set, get) => ({
     });
   },
   setPosition: (position) => {
-    localStorage.setItem(POSITION_STORAGE_KEY, JSON.stringify(position));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(POSITION_STORAGE_KEY, JSON.stringify(position));
+    }
 
     set({ position });
   },

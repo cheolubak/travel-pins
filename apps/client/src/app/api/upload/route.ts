@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     );
 
     if (!res.ok) {
-      throw new FetchError('업로드 실패', res.status, res);
+      throw new FetchError({ message: '업로드 실패' }, res);
     }
 
     const data = await res.json();

@@ -1,5 +1,7 @@
 import { FetchError } from './FetchError';
 
+export { FetchError } from './FetchError';
+
 export interface RequestConfig {
   baseURL?: string;
   headers?: HeadersInit;
@@ -149,11 +151,18 @@ export class RequestInstance {
       const response = await fetch(fullURL, fetchOptions);
 
       if (!response.ok) {
-        throw new FetchError(
-          `HTTP error! status: ${response.status}`,
-          response.status,
-          response,
-        );
+        let errorData: unknown = null;
+        try {
+          const ct = response.headers.get('content-type');
+          if (ct?.includes('application/json')) {
+            errorData = await response.json();
+          } else {
+            errorData = await response.text();
+          }
+        } catch {
+          // Body may not be readable
+        }
+        throw new FetchError(errorData, response);
       }
 
       const contentType = response.headers.get('content-type');
